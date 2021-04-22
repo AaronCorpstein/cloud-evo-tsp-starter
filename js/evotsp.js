@@ -86,8 +86,31 @@
     //    { length: …, routeId: …}
     // You should add each of these to `#best-route-list`
     // (after clearing it first).
-    function getBestRoutes(event) {
-        alert('You need to implement getBestRoutes()');
+    function getBestRoutes(numToReturn) {
+        //alert('You need to implement getBestRoutes()');
+		
+		$.ajax({
+            method: 'GET',
+            url: baseUrl + '/routes',
+            data: JSON.stringify({
+                runId: runId,
+                generation: generation,
+				Limit: numToReturn
+            }),
+            contentType: 'application/json',
+            // When a request completes, call `showRoute()` to display the
+            // route on the web page.
+            success: showRoute,
+            error: function ajaxError(jqXHR, textStatus, errorThrown) {
+                console.error(
+                    'Error finding best route: ', 
+                    textStatus, 
+                    ', Details: ', 
+                    errorThrown);
+                console.error('Response: ', jqXHR.responseText);
+                alert('An error occurred when finding the best route:\n' + jqXHR.responseText);
+            }
+        })
     }
 
     // Make a `GET` request that gets all the route information
@@ -97,8 +120,31 @@
     // This request will return a complete route JSON object.
     // You should display the returned information in 
     // `#route-by-id-elements` (after clearing it first).
-    function getRouteById() {
-        alert('You need to implement getRouteById()');
+    function getRouteById(routeId) {
+        //alert('You need to implement getRouteById()');
+		
+		$.ajax({
+            method: 'GET',
+            url: baseUrl + '/routes',
+            data: JSON.stringify({
+                runId: runId,
+                generation: generation
+				routeId: routeId
+            }),
+            contentType: 'application/json',
+            // When a request completes, call `showRoute()` to display the
+            // route on the web page.
+            success: showRoute,
+            error: function ajaxError(jqXHR, textStatus, errorThrown) {
+                console.error(
+                    'Error getting route by ID: ', 
+                    textStatus, 
+                    ', Details: ', 
+                    errorThrown);
+                console.error('Response: ', jqXHR.responseText);
+                alert('An error occurred when requesting a route by its ID:\n' + jqXHR.responseText);
+            }
+        })
     }
 
 }(jQuery));
