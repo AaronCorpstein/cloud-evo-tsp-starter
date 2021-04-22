@@ -111,7 +111,12 @@
         console.log('Found route received from API: ', result);
         const routeId = result.routeId;
         const length = result.length;
-        $('#route-by-id-elements').append(`<li>We found route ${routeId} with length ${length}.</li>`);
+		const generation = result.generation;
+		const partitionKey = result.partitionKey;
+		const runId = result.runId;
+		const route = result.route;
+		
+        $('#route-by-id-elements').append(`<li>We found route ${routeId} with length ${length}, of generation ${generation}, with partition Key of ${partitionKey}, and a run ID of ${runId}, and route: ${route} .</li>`);
 	}
     // Make a `GET` request that gets the K best routes.
     // The form of the `GET` request is:
