@@ -11,8 +11,8 @@
     // `getBestRoutes()` and `getRouteById()`.
     $(function onDocReady() {
         $('#generate-random-routes').click(randomRoutes);
-        $('#get-best-routes').click(getBestRoutes);
-        $('#get-route-by-id').click(getRouteById);
+        $('#get-best-routes').click(bestRoutes);
+        $('#get-route-by-id').click(routeById);
     });
 
     // This generates a single random route by POSTing the
@@ -62,12 +62,32 @@
     function randomRoutes(event) {
         const runId = $('#runId-text-field').val();
         const generation = $('#generation-text-field').val();
-        const numToGenerate =$('#num-to-generate').val();
+        const numToGenerate =$('#num-to-generate').val(); // Global feild
         // Reset the contents of `#new-route-list` so that it's ready for
         // `showRoute()` to "fill" it with the incoming new routes. 
         $('#new-route-list').text('');
         // 
         async.times(numToGenerate, () => randomRoute(runId, generation));
+    }
+	
+	function bestRoutes(event) {
+		const runId = $('#runId-text-field').val();
+        const generation = $('#generation-text-field').val();
+        const numToReturn =$('#num-best-to-get').val();
+         
+        $('#get-best-routes').text('');
+        
+        async.times(numToReturn, () => getBestRoutes(runId, generation, numToReturn));
+    }
+	
+	function routeById(event) {
+		//const runId = $('#runId-text-field').val();
+        //const generation = $('#generation-text-field').val();
+        //const numToReturn =$('#num-to-generate').val();
+         
+        $('#get-route-by-id').text('');
+        
+        async.times(1, () => getRouteById());
     }
 
     // When a request for a new route is completed, add an `<li>…</li>` element
@@ -79,6 +99,20 @@
         $('#new-route-list').append(`<li>We generated route ${routeId} with length ${length}.</li>`);
     }
 
+	function showBestRoutes(result){
+		console.log('New route received from API: ', result);
+		result.forEach(element => {
+			const {routeId, length} = element;
+			$('#best-route-list').append(`<li>We found the best route ${routeId} with length ${length}.</li>`);
+		})
+	}
+	
+	function showRouteById(result) {
+        console.log('Found route received from API: ', result);
+        const routeId = result.routeId;
+        const length = result.length;
+        $('#route-by-id-elements').append(`<li>We found route ${routeId} with length ${length}.</li>`);
+	}
     // Make a `GET` request that gets the K best routes.
     // The form of the `GET` request is:
     //   …/best?runId=…&generation=…&numToReturn=…
@@ -86,21 +120,16 @@
     //    { length: …, routeId: …}
     // You should add each of these to `#best-route-list`
     // (after clearing it first).
-    function getBestRoutes(numToReturn) {
+	
+    function getBestRoutes(runId, generation, numToReturn) {
         //alert('You need to implement getBestRoutes()');
 		
 		$.ajax({
             method: 'GET',
-            url: baseUrl + '/routes',
-            data: JSON.stringify({
-                runId: runId,
-                generation: generation,
-				Limit: numToReturn
-            }),
-            contentType: 'application/json',
+            url: baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numToReturn}`,
             // When a request completes, call `showRoute()` to display the
             // route on the web page.
-            success: showRoute,
+            success: showBestRoutes,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error(
                     'Error finding best route: ', 
@@ -120,18 +149,16 @@
     // This request will return a complete route JSON object.
     // You should display the returned information in 
     // `#route-by-id-elements` (after clearing it first).
-    function getRouteById(event) {
+    function getRouteById() {
         //alert('You need to implement getRouteById()');
-		const routeId = $('#route-Id').val();
+		const routeId = $('#route-ID').val();
 		
 		$.ajax({
             method: 'GET',
             url: baseUrl + '/routes' + `/${routeId}`,
-            
-            contentType: 'application/json',
             // When a request completes, call `showRoute()` to display the
             // route on the web page.
-            //success: showRoute,
+            success: showRouteById,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error(
                     'Error getting route by ID: ', 
