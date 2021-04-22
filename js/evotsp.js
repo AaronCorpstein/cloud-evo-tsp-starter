@@ -131,7 +131,7 @@
             contentType: 'application/json',
             // When a request completes, call `showRoute()` to display the
             // route on the web page.
-            success: showRoute,
+            //success: showRoute,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error(
                     'Error getting route by ID: ', 
