@@ -87,7 +87,7 @@
          
         $('#get-route-by-id').text('');
         
-        async.times(1, () => getRouteById());
+        getRouteById();
     }
 
     // When a request for a new route is completed, add an `<li>…</li>` element
