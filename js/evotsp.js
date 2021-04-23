@@ -77,7 +77,7 @@
          
         $('#get-best-routes').text('');
         
-        async.times(numToReturn, () => getBestRoutes(runId, generation, numToReturn));
+        getBestRoutes(runId, generation, numToReturn);
     }
 	
 	function routeById(event) {
