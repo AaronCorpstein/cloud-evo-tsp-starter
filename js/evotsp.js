@@ -75,7 +75,7 @@
         const generation = $('#generation-text-field').val();
         const numToReturn =$('#num-best-to-get').val();
          
-        // $('#get-best-routes').text('');
+        $('#best-route-list').text('');
         
         getBestRoutes(runId, generation, numToReturn);
     }
@@ -101,8 +101,6 @@
 
 	function showBestRoutes(result){
 		console.log('New route received from API: ', result);
-		
-		$('#get-best-routes').text('');
 		
 		result.forEach(element => {
 			const {routeId, length} = element;
