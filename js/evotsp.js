@@ -302,7 +302,7 @@
     // FILL THIS IN
 	const numParents = $('#num-parents').val();
 	const runId = $('#runId-text-field').val();
-	
+	console.log("run id is: " + runId + "and the gen is: " + generation)
 	$.ajax({
             method: 'GET',
             url: baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numParents}`,
