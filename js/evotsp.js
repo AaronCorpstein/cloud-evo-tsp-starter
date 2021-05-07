@@ -210,7 +210,7 @@
     function logValue(label, value, log_cb) {
       console.log(`In waterfall: ${label} = ${JSON.stringify(value)}`);
 	    if(label == "parents" || label == "children") {
-		    console.log(${label} length is ${value.length});
+		    console.log(`${label} length is ${value.length}`);
 	    }
       log_cb(null, value);
     }
