@@ -268,10 +268,10 @@
       // We can just take the last route as the "worst" because the
       // Lambda/DynamoDB combo gives us the routes in sorted order by
       // length.
-	    console.log("The OLD Threshold: " +lengthStoredThreshold)
+	    console.log("The OLD Threshold: " + lengthStoreThreshold)
       lengthStoreThreshold = bestRoutes[bestRoutes.length - 1].len;
       $("#current-threshold").text(lengthStoreThreshold);
-	    console.log("The NEW Threshold: " +lengthStoredThreshold)
+	    console.log("The NEW Threshold: " + lengthStoreThreshold)
       utl_cb(null, bestRoutes);
 	    
     }
