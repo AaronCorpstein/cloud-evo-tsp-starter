@@ -209,6 +209,9 @@
     // `log_cb(null, value)` call at the end.
     function logValue(label, value, log_cb) {
       console.log(`In waterfall: ${label} = ${JSON.stringify(value)}`);
+	    if(label == "parents" || label == "children") {
+		    console.log(${label} length is ${value.length});
+	    }
       log_cb(null, value);
     }
 
@@ -240,6 +243,7 @@
       const numChildren = Math.floor(popSize / parents.length);
       // `async.each` runs the provided function once (in "parallel") for
       // each of the values in the array of parents.
+	console.log("The number of children: " + numChildren)
       async.concat( // each(
         parents,
         (parent, makeChildren_cb) => {
@@ -264,9 +268,12 @@
       // We can just take the last route as the "worst" because the
       // Lambda/DynamoDB combo gives us the routes in sorted order by
       // length.
+	    console.log("The OLD Threshold: " +lengthStoredThreshold)
       lengthStoreThreshold = bestRoutes[bestRoutes.length - 1].len;
       $("#current-threshold").text(lengthStoreThreshold);
+	    console.log("The NEW Threshold: " +lengthStoredThreshold)
       utl_cb(null, bestRoutes);
+	    
     }
   }
 
@@ -369,7 +376,7 @@
   // `callback` as the `success` callback function in the Ajax call.
   function getRouteById(routeId, callback) {
     // FILL THIS IN		
-	console.log(routeId)
+	//console.log(routeId)
 		$.ajax({
             method: 'GET',
             url: baseUrl + `/routes/${routeId}`,
