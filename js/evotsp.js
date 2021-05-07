@@ -220,7 +220,7 @@
       setTimeout(function () {
         console.log(`Done sleeping gen ${generation} at ${Date.now()}`);
         wait_cb(); // Call wait_cb() after the message to "move on" through the waterfall
-      }, 5000);
+      }, 10000);
     }
 
     // Reset a few of the page components that should "start over" at each
